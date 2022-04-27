@@ -1,0 +1,130 @@
+using System;
+class Match
+{
+    public static string player1 = "Djokovic";
+    public static string player2 = "Nadal";
+    int setPlayer1;
+    int setPlayer2;
+}
+class Set
+{
+    public int gamesPlayer1;
+    public int gamesPlayer2;
+    Game newG;
+    public Set()
+    {
+        
+    }   
+    public void getSet(Game newGame)
+    {
+        if (newGame.pointPlayer1 == 4 && newGame.pointPlayer2<3 || newGame.pointPlayer1 == 5)
+        { gamesPlayer1++; }
+        else if (newGame.pointPlayer1 == 4 && newGame.pointPlayer1 < 3 || newGame.pointPlayer2 == 5)
+        { gamesPlayer1++; }
+    }
+}
+class Game
+{
+    
+    public int pointPlayer1;
+    public int pointPlayer2;
+    public string displayPoint1;
+    public string displayPoint2;
+    
+    Point newP;
+    public Game()
+    {
+        pointPlayer1 = pointPlayer2 =0;
+    }
+     public void getGame(Point newPoint)
+    {
+        if (newPoint.point == 0)
+        {
+            pointPlayer1++;
+            //pointPlayer2 = pointPlayer2 == 4 ? 3 : pointPlayer2;
+            if (pointPlayer2 == 4) { pointPlayer2--; }
+            displayPoint1 = pointPlayer1 == 1 ? " has 15 points"
+                          : pointPlayer1 == 2 ? " has 30 points"
+                          : pointPlayer1 == 3 ? " has 40 points"
+                          : pointPlayer1 == 4 && pointPlayer2 == 3 ? " has advantage"
+                          : pointPlayer1 == 4 && pointPlayer2 < 3 ? " --won the game--\n"
+                          : " -- won the game--\n";
+
+            Console.WriteLine(Match.player1 + displayPoint1);
+        }
+        else if (newPoint.point == 1)
+        {
+            pointPlayer2++;
+            //pointPlayer1 = pointPlayer1 == 4 ? 3 : pointPlayer2;
+            if(pointPlayer1 == 4) { pointPlayer1--; }
+            displayPoint2 = pointPlayer2 == 1 ? " has 15 points"
+                          : pointPlayer2 == 2 ? " has 30 points"
+                          : pointPlayer2 == 3 ? " has 40 points"
+                          : pointPlayer2 == 4 && pointPlayer1 == 3 ? " has advantage"
+                          : pointPlayer2 == 4 && pointPlayer1 < 3 ? " --won the game--\n"
+                          : " --won the game--\n";
+            Console.WriteLine(Match.player2 + displayPoint2);
+        }
+        else Console.WriteLine("Something is wrong");        
+    }
+}
+class Point
+{
+    public int point;
+    
+    public Point()
+    {
+        point = new Random().Next(0,2);       
+    }
+}
+
+
+class Program
+{
+   
+    static void Main()
+    {
+        string player1 ="Djokovic";
+        string player2 ="Nadal";
+
+        Console.WriteLine("Press any key to get player1");
+        Console.WriteLine(player1);
+        Console.WriteLine("Press any key to get player2");
+        Console.WriteLine(player2);
+
+
+        Console.WriteLine("Press any key to start game");
+        Console.ReadKey();
+        Console.WriteLine("Match started\n");
+        
+        
+        
+        int setCount = 0;
+        while (1 == 1)
+        {
+            Set newSet = new Set();
+            setCount++;
+            Console.WriteLine("**** Set " + setCount + " ****");
+            int gameCount = 0;
+            while (1 == 1)
+            {
+                gameCount++;
+                Game newGame = new Game();
+                Console.WriteLine("** Game " + gameCount + " **");
+                
+                
+
+                while ((newGame.pointPlayer1 < 4 && newGame.pointPlayer2 < 4)&&(newGame.displayPoint2!= " --won the game--\n" || newGame.displayPoint1 != " --won the game--\n")) //5th point wins game
+                {
+                    newGame.getGame(new Point());
+                    Console.WriteLine();
+                    Console.ReadKey();
+
+                }
+                newSet.getSet(newGame);
+                Console.WriteLine(player1+" - " + newSet.gamesPlayer1 +"  :  " + player2+" - "+newSet.gamesPlayer2);
+            }
+        }
+
+    }
+}
